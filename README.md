@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-# LTweb
 =======
 # CO3021_He_QUAN_TRI_CSDL
 BTL hệ quản trị CSDL

@@ -22,52 +22,84 @@
         }
     ?>
 
-    <?php
-        if(isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
-            if ($_POST["submit"] == "Thêm vào giỏ hàng") {
-                $productId = $_GET['id'];
-                $userId = $_SESSION['id'];
-                $number = $_POST["number"];
+<?php
 
-                if($number > 0){
-                    require_once('../../admincp/config-database.php');
-                    $conn = openCon();
-                    $query = "INSERT INTO orders (userId, productId, number) VALUES ('$userId', '$productId', '$number')";
-                    $result = $conn->query($query);
 
-                    if ($result) {
-                        echo 
-                        '
-                        <script>
-                            alert("Thêm sản phẩm vào giỏ hàng thành công");
-                            window.location.href = "../../index.php?headermenu=cart";
-                        </script>
-                        ';
-                        exit();
-                    } else {
-                        echo 
-                        '
-                        <script>
-                            alert("Có lỗi xảy ra");
-                            window.location.href = "../../index.php?headermenu=cart";
-                        </script>
-                        ';
-                        exit();
-                    }
+if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_POST["submit"] == "Thêm vào giỏ hàng") {
+        $productId = $_GET['id'];
+        $userId = $_SESSION['id'];
+        $number = $_POST["number"];
+
+        if ($number > 0) {
+            require_once('../../admincp/config-database.php');
+            $conn = openCon();
+
+            // Kiểm tra xem sản phẩm đã có trong giỏ hàng hay chưa
+            $checkQuery = "SELECT * FROM cart_temp WHERE userId = '$userId' AND productId = '$productId'";
+            $checkResult = $conn->query($checkQuery);
+
+            if ($checkResult->num_rows > 0) {
+                // Nếu sản phẩm đã tồn tại, cập nhật số lượng
+                $updateQuery = "UPDATE cart_temp SET quantity = quantity + $number WHERE userId = '$userId' AND productId = '$productId'";
+                $updateResult = $conn->query($updateQuery);
+
+                if ($updateResult) {
+                    echo 
+                    '
+                    <script>
+                        alert("Cập nhật số lượng sản phẩm thành công");
+                        window.location.href = "../../index.php?headermenu=cart";
+                    </script>
+                    ';
+                    exit();
+                } else {
+                    echo 
+                    '
+                    <script>
+                        alert("Có lỗi xảy ra khi cập nhật giỏ hàng");
+                        window.location.href = "../../index.php?headermenu=cart";
+                    </script>
+                    ';
+                    exit();
                 }
+            } else {
+                // Nếu sản phẩm chưa tồn tại, thêm mới vào giỏ hàng
+                $insertQuery = "INSERT INTO cart_temp (userId, productId, quantity) VALUES ('$userId', '$productId', '$number')";
+                $insertResult = $conn->query($insertQuery);
 
-                
-            }
-            else if ($_POST["submit"] == "Về trang chủ") {
-                echo
-                '
-                <script>
-                    window.location.href = "../../index.php";
-                </script>
-                ';
+                if ($insertResult) {
+                    echo 
+                    '
+                    <script>
+                        alert("Thêm sản phẩm vào giỏ hàng thành công");
+                        window.location.href = "../../index.php?headermenu=cart";
+                    </script>
+                    ';
+                    exit();
+                } else {
+                    echo 
+                    '
+                    <script>
+                        alert("Có lỗi xảy ra khi thêm vào giỏ hàng");
+                        window.location.href = "../../index.php?headermenu=cart";
+                    </script>
+                    ';
+                    exit();
+                }
             }
         }
-    ?>
+    } else if ($_POST["submit"] == "Về trang chủ") {
+        echo
+        '
+        <script>
+            window.location.href = "../../index.php";
+        </script>
+        ';
+    }
+}
+?>
+
 
     <div class="container bg-light mt-5 mb-5" style="width: 600px">
         <div class="row">

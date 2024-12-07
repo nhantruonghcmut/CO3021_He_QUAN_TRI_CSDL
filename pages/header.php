@@ -1,73 +1,81 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <img src="./images/bkshop1.png" alt="logo" style="height: 40px; width: 40px;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="container">
+        <a class="navbar-brand" href="index.php">
+            <img src="./images/bkshop1.png" alt="logo" style="height: 40px; width: 40px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php">Trang Chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?headermenu=gioithieu">Giới thiệu</a>
-                    </li>
-                    <div class="dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Sản phẩm
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?contentmenu=sanphammoi&page=1">Sản phẩm mới</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?contentmenu=sanphamkhuyenmai&page=1">Sản phẩm khuyến mãi</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?contentmenu=quanaobongda&page=1">Quần áo bóng đá</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?contentmenu=giaybongda&page=1">Giày bóng đá</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?contentmenu=gangtaythumon&page=1">Găng tay thủ môn</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?contentmenu=phukienbongda&page=1">Phụ kiện bóng đá</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?contentmenu=bongthidau&page=1">Bóng thi đấu</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.php?contentmenu=tatcasanpham&page=1">Tất cả sản phẩm</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?headermenu=lienhe">Liên hệ</a>
-                    </li>
-                </ul>
-                
-                <form method="GET" action="index.php" class="d-flex m-2">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-
-                <div>
-                    <a href="./pages/cart/cartController.php" class="text-decoration-none">
-                        <button type="button" class="btn btn-outline-info">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart4 inline-block" viewBox="0 0 20 20">
-                                <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
-                            </svg>
-                            Giỏ hàng
-                        </button>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.php">Trang Chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?headermenu=gioithieu">Giới thiệu</a>
+                </li>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Sản phẩm
                     </a>
-                    
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?contentmenu=sanphammoi&page=1">Sản phẩm mới</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?contentmenu=sanphamkhuyenmai&page=1">Sản phẩm khuyến
+                                mãi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?contentmenu=quanaobongda&page=1">Quần áo bóng đá</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?contentmenu=giaybongda&page=1">Giày bóng đá</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?contentmenu=gangtaythumon&page=1">Găng tay thủ môn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?contentmenu=phukienbongda&page=1">Phụ kiện bóng đá</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?contentmenu=bongthidau&page=1">Bóng thi đấu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?contentmenu=tatcasanpham&page=1">Tất cả sản phẩm</a>
+                        </li>
+                    </ul>
                 </div>
-                
-                <?php 
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?headermenu=lienhe">Liên hệ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?headermenu=lichsugiaodich">Lịch sử giao dịch</a>
+                </li>
+            </ul>
+
+            <form method="GET" action="index.php" class="d-flex m-2">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
+            <div>
+                <a href="./pages/cart/cartController.php" class="text-decoration-none">
+                    <button type="button" class="btn btn-outline-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            class="bi bi-cart4 inline-block" viewBox="0 0 20 20">
+                            <path
+                                d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
+                        </svg>
+                        Giỏ hàng
+                    </button>
+                </a>
+
+            </div>
+
+            <?php 
                     if(($_SESSION) && $_SESSION['role'] == 2){
                         echo 
                         '
@@ -117,6 +125,6 @@
                         ';
                     }
                 ?>
-            </div>
         </div>
-    </nav>  
+    </div>
+</nav>

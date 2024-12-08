@@ -23,7 +23,19 @@
 </head>
 
 <body id="page-top">
-
+<?php
+        session_start();
+        if(!($_SESSION) || !($_SESSION['role'] == 1)){ 
+            echo 
+            '
+            <script>
+                window.location.href = "../../index.php";
+            </script>
+            ';
+            exit();
+        }
+        
+    ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -31,7 +43,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin.php?page=dashboard">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -184,7 +196,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="../logout.php">Logout</a>
                 </div>
             </div>
         </div>

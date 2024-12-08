@@ -30,7 +30,7 @@
                     echo 
                     '
                     <script>
-                        window.location.href = "pages/adminpage/adminpage.php";
+                        window.location.href = "pages/admin/admin.php?page=dashboard";
                     </script>
                     ';
                     exit();

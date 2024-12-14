@@ -4,7 +4,13 @@
             $username = $_POST["username"];
             $password = $_POST["password"];
 
-            require_once('./admincp/config-database.php');
+            $file_path = __DIR__ . '/../adminconfig/config-database.php';
+            if (file_exists($file_path)) {
+                require_once $file_path;
+            } else {
+                die("File config-database.php không tồn tại tại đường dẫn: $file_path");
+            }
+            
             $conn = openCon();
 
             $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";

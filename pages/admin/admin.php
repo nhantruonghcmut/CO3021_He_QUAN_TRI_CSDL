@@ -11,6 +11,8 @@
 
     <title>SB Admin 2 - Dashboard</title>
 
+
+
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -20,21 +22,24 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
-<?php
-        session_start();
-        if(!($_SESSION) || !($_SESSION['role'] == 1)){ 
-            echo 
+    <?php
+    session_start();
+    if (!($_SESSION) || !($_SESSION['role'] == 1)) {
+        echo
             '
             <script>
                 window.location.href = "../../index.php";
             </script>
             ';
-            exit();
-        }
-        
+        exit();
+    }
+
     ?>
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -65,26 +70,27 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Manage
+                Quản lý
             </div>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Manage User</span></a>
+                    <span>Quản lý người dùng</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="/">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Manage product item</span></a>
+                <a class="nav-link" href="admin.php?page=manageListProduct">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Quản lý sản phẩm</span></a>
             </li>
+
+
             <li class="nav-item">
                 <a class="nav-link" href="admin.php?page=manageTransaction">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Manage transaction</span>
+                    <span>Quản lý giao dịch</span>
                 </a>
             </li>
 
@@ -130,30 +136,30 @@
                 <!-- End of Topbar -->
 
                 <?php
-    if (isset($_GET['page'])) {
-        switch ($_GET['page']) {
-            case 'manageTransaction':
-                include('manageTransaction.php');
-                break;
-            case 'manageUser':
-                include('manageUser.php');
-                break;
-            case 'manageProduct':
-                include('manageProduct.php');
-                break;
-            case 'dashboard':
-                include('dashboard.php');  
-                break;
-            // default:
-            //     include('dashboard.php');  
-            //     break;
-        }
-    }
-    // } else {
-    //     include('dashboard.php');
-    // }
-    
-    ?>
+                if (isset($_GET['page'])) {
+                    switch ($_GET['page']) {
+                        case 'manageTransaction':
+                            include('manageTransaction.php');
+                            break;
+                        case 'manageUser':
+                            include('manageUser.php');
+                            break;
+                        case 'manageListProduct':
+                            include('manageListProduct.php');
+                            break;
+                        case 'dashboard':
+                            include('dashboard.php');
+                            break;
+                        // default:
+                        //     include('dashboard.php');  
+                        //     break;
+                    }
+                }
+                // } else {
+                //     include('dashboard.php');
+                // }
+                
+                ?>
 
 
 
@@ -165,7 +171,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Bản quyền &copy; BK Shop Admin 2024</span>
                     </div>
                 </div>
             </footer>
@@ -202,24 +208,31 @@
         </div>
     </div>
 
+    
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+    
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
+    
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
-
+    
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/chart-bar-demo.js"></script>
+    
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
 
 </body>
 

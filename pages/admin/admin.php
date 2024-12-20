@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>BK Shop Admin</title>
 
 
 
@@ -82,8 +82,13 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="admin.php?page=manageListProduct">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                <i class="fas fa-skating"></i>
                     <span>Quản lý sản phẩm</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=createProduct">
+                <i class="fas fa-plus"></i>
+                    <span>Thêm sản phẩm</span></a>
             </li>
 
 
@@ -146,6 +151,9 @@
                             break;
                         case 'manageListProduct':
                             include('manageListProduct.php');
+                            break;
+                        case 'createProduct':
+                            include('./../adminpage/addproduct.php');
                             break;
                         case 'dashboard':
                             include('dashboard.php');

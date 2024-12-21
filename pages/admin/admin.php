@@ -81,33 +81,50 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="admin.php?page=manageListProduct">
-                <i class="fas fa-skating"></i>
-                    <span>Quản lý sản phẩm</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin.php?page=manageProduct">
-                <i class="fas fa-skating"></i>
-                    <span>Quản lý sản phẩm có giá lớn hơn giá bán trung bình trong đơn hàng</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin.php?page=manageProductNoOrder">
-                <i class="fas fa-skating"></i>
-                    <span>Quản lý sản phẩm không có đơn hàng</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin.php?page=createProduct">
-                <i class="fas fa-plus"></i>
-                    <span>Thêm sản phẩm</span></a>
-            </li>
-
-
-            <li class="nav-item">
                 <a class="nav-link" href="admin.php?page=manageTransaction">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Quản lý giao dịch</span>
                 </a>
             </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Quản lý sản phẩm MySQL
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=manageListProduct">
+                    <i class="fas fa-skating"></i>
+                    <span>Quản lý sản phẩm</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=manageProduct">
+                    <i class="fas fa-skating"></i>
+                    <span>Quản lý sản phẩm có giá lớn hơn giá bán trung bình trong đơn hàng</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=manageProductJoin">
+                    <i class="fas fa-skating"></i>
+                    <span>Quản lý sản phẩm không có đơn hàng</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=createProduct">
+                    <i class="fas fa-plus"></i>
+                    <span>Thêm sản phẩm</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Quản lý sản phẩm MongoDB
+            </div>
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -159,21 +176,38 @@
                         case 'manageUser':
                             include('manageUser.php');
                             break;
+                        case 'dashboard':
+                            include('dashboard.php');
+                            break;
+
+                        //MySQL
                         case 'manageListProduct':
                             include('./../adminpage/adminpage.php');
                             break;
                         case 'manageProduct':
-                            include('manageListProduct.php');
+                            include('./../adminpage/manageListProductSubquery.php');
                             break;
-                        case 'manageProductNoOrder':
+                        case 'manageProductJoin':
                             include('./../adminpage/productJoin.php');
                             break;
                         case 'createProduct':
                             include('./../adminpage/addproduct.php');
                             break;
-                        case 'dashboard':
-                            include('dashboard.php');
-                            break;
+
+                        // //MongoDB
+                        // case 'manageListProduct':
+                        //     include('./../adminpageMongoDB/adminpage.php');
+                        //     break;
+                        // case 'manageProduct':
+                        //     include('manageListProduct.php');
+                        //     break;
+                        // case 'manageProductJoin':
+                        //     include('./../adminpageMongoDB/productJoin.php');
+                        //     break;
+                        // case 'createProduct':
+                        //     include('./../adminpageMongoDB/addproduct.php');
+                        //     break;
+
                         // default:
                         //     include('dashboard.php');  
                         //     break;
@@ -232,25 +266,25 @@
         </div>
     </div>
 
-    
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    
+
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    
+
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
-    
+
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/chart-bar-demo.js"></script>
-    
+
     <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>

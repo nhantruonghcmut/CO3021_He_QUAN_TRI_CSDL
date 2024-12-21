@@ -125,6 +125,26 @@
                 Quản lý sản phẩm MongoDB
             </div>
 
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=mongo_manageListProduct">
+                    <i class="fas fa-skating"></i>
+                    <span>Quản lý sản phẩm</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=mongo_manageProduct">
+                    <i class="fas fa-skating"></i>
+                    <span>Quản lý sản phẩm có giá lớn hơn giá bán trung bình trong đơn hàng</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=mongo_manageProductJoin">
+                    <i class="fas fa-skating"></i>
+                    <span>Quản lý sản phẩm không có đơn hàng</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=mongo_createProduct">
+                    <i class="fas fa-plus"></i>
+                    <span>Thêm sản phẩm</span></a>
+            </li>
 
         </ul>
         <!-- End of Sidebar -->
@@ -194,19 +214,19 @@
                             include('./../adminpage/addproduct.php');
                             break;
 
-                        // //MongoDB
-                        // case 'manageListProduct':
-                        //     include('./../adminpageMongoDB/adminpage.php');
-                        //     break;
-                        // case 'manageProduct':
-                        //     include('manageListProduct.php');
-                        //     break;
-                        // case 'manageProductJoin':
-                        //     include('./../adminpageMongoDB/productJoin.php');
-                        //     break;
-                        // case 'createProduct':
-                        //     include('./../adminpageMongoDB/addproduct.php');
-                        //     break;
+                        //MongoDB
+                        case 'mongo_manageListProduct':
+                            include('./../adminpageMongoDB/adminpage.php');
+                            break;
+                        case 'mongo_manageProduct':
+                            include('./../adminpageMongoDB/manageListProductSubquery.php');
+                            break;
+                        case 'mongo_manageProductJoin':
+                            include('./../adminpageMongoDB/productJoin.php');
+                            break;
+                        case 'mongo_createProduct':
+                            include('./../adminpageMongoDB/addproduct.php');
+                            break;
 
                         // default:
                         //     include('dashboard.php');  

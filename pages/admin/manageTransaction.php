@@ -26,6 +26,7 @@
                 <th scope="col">#</th>
                 <th scope="col">orderId</th>
                 <th scope="col">userId</th>
+                <th scope="col">userName</th>
                 <th scope="col">productId</th>
                 <th scope="col">orderdate</th>
                 <th scope="col">price_sell</th>
@@ -79,6 +80,7 @@ function loadOrders(userId, orderId, startDate, endDate, page = 1) {
                         <th scope="row">${(page - 1) * 20 + index + 1}</th>
                         <td>${order.orderId}</td>
                         <td>${order.userId}</td>
+                        <td>${order.username}</td>
                         <td>${order.productId}</td>
                         <td>${order.orderdate}</td>
                         <td>${order.price_sell}</td>

@@ -11,9 +11,9 @@ $limit = 20;
 $offset = ($page - 1) * $limit;
 
 if (empty($userId) && empty($orderId) && empty($startDate) && empty($endDate)) {
-    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM orders LIMIT ?, ?";
+    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM orders join users on userId = id LIMIT ?, ?";
 } else {
-    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM orders WHERE 1=1";
+    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM orders join users on userId = id WHERE 1=1";
 
     if (!empty($userId)) {
         $sql .= " AND userId = ?";

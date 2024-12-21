@@ -1,8 +1,8 @@
 <?php
     function OpenCon(){
-        $dbhost = "";
+        $dbhost = "cuongnguyen.local";
         $dbuser = "root";
-        $dbpass = "1412";
+        $dbpass = "";
         $db = "sportshop";
 
         $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n". $conn -> error);

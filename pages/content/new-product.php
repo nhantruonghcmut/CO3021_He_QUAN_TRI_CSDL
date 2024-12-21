@@ -3,7 +3,7 @@
 </div>
 
 <?php
-    require_once('./admincp/config-database.php');
+    require_once("./adminconfig/config-database.php");
     $conn = openCon();
 
     $query = "SELECT * FROM product ORDER BY id DESC LIMIT 9";
@@ -30,5 +30,3 @@
         }
     }
 ?>
-
-                

@@ -35,6 +35,8 @@
         <tbody id="table-body">
         </tbody>
     </table>
+    <div id="pagination" class="mt-4 d-flex justify-content-center"></div>
+
 </div>
 
 <script>
@@ -46,35 +48,35 @@ document.getElementById("search-form").addEventListener("submit", function(event
     const startDate = document.getElementById("search-startDate").value;
     const endDate = document.getElementById("search-endDate").value;
 
-    loadOrders(userId, orderId, startDate, endDate);
+    loadOrders(userId, orderId, startDate, endDate, 1);
 });
 
-function loadOrders(userId, orderId, startDate, endDate) {
-    let url = 'fetchOrders.php?';
+function loadOrders(userId, orderId, startDate, endDate, page = 1) {
+    let url = `fetchOrders.php?page=${page}`;
 
     if (userId) {
-        url += 'userId=' + encodeURIComponent(userId) + '&';
+        url += `&userId=${encodeURIComponent(userId)}`;
     }
     if (orderId) {
-        url += 'orderId=' + encodeURIComponent(orderId) + '&';
+        url += `&orderId=${encodeURIComponent(orderId)}`;
     }
     if (startDate) {
-        url += 'startDate=' + encodeURIComponent(startDate) + '&';
+        url += `&startDate=${encodeURIComponent(startDate)}`;
     }
     if (endDate) {
-        url += 'endDate=' + encodeURIComponent(endDate) + '&';
+        url += `&endDate=${encodeURIComponent(endDate)}`;
     }
 
     fetch(url)
         .then(response => response.json())
-        .then(orders => {
+        .then(data => {
             const tableBody = document.getElementById('table-body');
             tableBody.innerHTML = '';
 
-            orders.forEach((order, index) => {
+            data.orders.forEach((order, index) => {
                 const row = `
                     <tr>
-                        <th scope="row">${index + 1}</th>
+                        <th scope="row">${(page - 1) * 20 + index + 1}</th>
                         <td>${order.orderId}</td>
                         <td>${order.userId}</td>
                         <td>${order.productId}</td>
@@ -85,10 +87,59 @@ function loadOrders(userId, orderId, startDate, endDate) {
                 `;
                 tableBody.innerHTML += row;
             });
+
+            renderPagination(data.totalPages, data.currentPage, userId, orderId, startDate, endDate);
         })
         .catch(error => console.error('Error loading orders:', error));
 }
-window.onload = function() {
-    loadOrders("", "", "", "");
+
+
+function renderPagination(totalPages, currentPage) {
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const maxVisibleButtons = 5;
+    const half = Math.floor(maxVisibleButtons / 2);
+    const startPage = Math.max(1, currentPage - half);
+    const endPage = Math.min(totalPages, currentPage + half);
+
+    if (currentPage > 1) {
+        pagination.innerHTML +=
+            `<button class="btn btn-primary mx-1" onclick="changePage(${currentPage - 1})">Previous</button>`;
+    }
+
+    if (startPage > 1) {
+        pagination.innerHTML += `<button class="btn btn-secondary mx-1" onclick="changePage(1)">1</button>`;
+        if (startPage > 2) {
+            pagination.innerHTML += `<span class="mx-1">...</span>`;
+        }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        const activeClass = i === currentPage ? "btn-primary" : "btn-secondary";
+        pagination.innerHTML += `<button class="btn ${activeClass} mx-1" onclick="changePage(${i})">${i}</button>`;
+    }
+
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            pagination.innerHTML += `<span class="mx-1">...</span>`;
+        }
+        pagination.innerHTML +=
+            `<button class="btn btn-secondary mx-1" onclick="changePage(${totalPages})">${totalPages}</button>`;
+    }
+
+    if (currentPage < totalPages) {
+        pagination.innerHTML +=
+            `<button class="btn btn-primary mx-1" onclick="changePage(${currentPage + 1})">Next</button>`;
+    }
+}
+
+function changePage(page) {
+    const userId = document.getElementById("search-userId").value;
+    const orderId = document.getElementById("search-orderId").value;
+    const startDate = document.getElementById("search-startDate").value;
+    const endDate = document.getElementById("search-endDate").value;
+
+    loadOrders(userId, orderId, startDate, endDate, page);
 }
 </script>

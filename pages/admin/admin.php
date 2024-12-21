@@ -93,7 +93,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Quản lý sản phẩm MySQL
+                Quản lý sản phẩm
             </div>
 
             <li class="nav-item">
@@ -117,34 +117,6 @@
                     <span>Thêm sản phẩm</span></a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Quản lý sản phẩm MongoDB
-            </div>
-
-            <li class="nav-item">
-                <a class="nav-link" href="admin.php?page=mongo_manageListProduct">
-                    <i class="fas fa-skating"></i>
-                    <span>Quản lý sản phẩm</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin.php?page=mongo_manageProduct">
-                    <i class="fas fa-skating"></i>
-                    <span>Quản lý sản phẩm có giá lớn hơn giá bán trung bình trong đơn hàng</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin.php?page=mongo_manageProductJoin">
-                    <i class="fas fa-skating"></i>
-                    <span>Quản lý sản phẩm không có đơn hàng</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="admin.php?page=mongo_createProduct">
-                    <i class="fas fa-plus"></i>
-                    <span>Thêm sản phẩm</span></a>
-            </li>
 
         </ul>
         <!-- End of Sidebar -->

@@ -37,6 +37,5 @@ try {
     session.abortTransaction();
     print("Lỗi xảy ra trong quá trình thực thi:", error.message);
 } finally {
-
     session.endSession();
 }

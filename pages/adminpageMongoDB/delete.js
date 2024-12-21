@@ -3,11 +3,7 @@ const dbSession = session.getDatabase("sportshop").product;
 
 try {
     session.startTransaction();
-    const explainResult = dbSession.product.deleteOne({ id: 199 }).explain("executionStats");
-    
-    printjson(explainResult);
-    
-    const result = dbSession.product.deleteOne({ id: 199 });
+    const result = dbSession.product.deleteOne({ id: 399 });
     if (result.deletedCount === 1) {
         session.commitTransaction();
         print("Xóa sản phẩm thành công.");

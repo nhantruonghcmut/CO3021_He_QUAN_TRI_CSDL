@@ -19,14 +19,12 @@
 			$description = $_POST["description"];
 			$image = $_POST["image"];
 			$price = $_POST["price"];
-
 			require_once('./../../adminconfig/config-database.php');
 			$conn = openCon();
 			try {
 				$conn->begin_transaction();
 				$query = "UPDATE product SET name = '$name', type = type, quantity = '$quantity', description = '$description', image = '$image', price = '$price' WHERE id = '$id'";
 				$result = $conn->query($query);
-
 				if ($result) {
 					echo
 						'

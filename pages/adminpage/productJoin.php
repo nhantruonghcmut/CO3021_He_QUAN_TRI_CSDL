@@ -40,6 +40,7 @@
                         FROM product p
                         LEFT JOIN orders o ON p.id = o.productId
                         WHERE o.productId IS NULL;";
+              echo "Query: " . $query . "</br>";
               $result = $conn->query($query);
               $conn->commit();
               if ($result->num_rows > 0) {

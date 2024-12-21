@@ -15,7 +15,7 @@ try {
   };
 
   const result = dbSession.product.updateOne(
-    { id: 99 },
+    { id: 299 },
     {
       $set: {
         name: updatedProduct.name,

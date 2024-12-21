@@ -83,7 +83,6 @@
 				return number_format($number, 0, ',', '.') . ' VNĐ';
 			}
 
-			// Bắt đầu transaction
 			$conn->begin_transaction();
 			try {
 				$keyword = isset($_POST['keyword']) ? $_POST['keyword'] : '';
@@ -91,16 +90,19 @@
 				if ($keyword != '' && $priceCondition != '') {
 					$query = "SELECT * FROM product WHERE CONCAT(name,description,quantity) LIKE '%$keyword%' AND price > '$priceCondition'";
 					echo "Query: " . $query . "</br>";
+					echo "Tìm thấy " . $result->num_rows . " sản phẩm";
 					$result = $conn->query($query);
 				} else if ($keyword != '') {
 					$query = "SELECT * FROM product WHERE CONCAT(name,description,quantity) LIKE '%$keyword%'";
 					$result = $conn->query($query);
+					echo "Query: " . $query . "</br>";
+					echo "Tìm thấy " . $result->num_rows . " sản phẩm";
+
 				} else {
 					$query = "SELECT * FROM product";
 					$result = $conn->query($query);
 				}
 				if ($result->num_rows > 0) {
-					// echo "Tìm thấy " . $result->num_rows . " sản phẩm";
 					echo "<table class='table table-bordered' id='productTable' width='100%'>
 								<thead>
 										<tr>

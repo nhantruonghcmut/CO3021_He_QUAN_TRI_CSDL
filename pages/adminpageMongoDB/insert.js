@@ -5,7 +5,7 @@ try {
   session.startTransaction();
 
   const result = dbSession.product.insertOne({
-    id: 199,
+    id: 299,
     name: "Găng Tay Cụt Ngón, Bao Tay Tập Gym Thể Thao Đa Năng Dành Cho Phượt Thủ Phong Cách",
     type: "clothes",
     price: 82500,

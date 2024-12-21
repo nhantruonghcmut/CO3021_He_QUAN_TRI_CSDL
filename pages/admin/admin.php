@@ -75,7 +75,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="manageUser.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Quản lý người dùng</span></a>
             </li>
@@ -142,8 +142,13 @@
                             include('manageTransaction.php');
                             break;
                         case 'manageUser':
-                            include('manageUser.php');
+                            echo '
+                            <script>
+                                window.location.href = "manageUser.php";
+                            </script>
+                            ';
                             break;
+                            
                         case 'manageListProduct':
                             include('manageListProduct.php');
                             break;

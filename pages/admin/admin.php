@@ -86,6 +86,11 @@
                     <span>Quản lý sản phẩm</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=manageProduct">
+                <i class="fas fa-skating"></i>
+                    <span>Quản lý sản phẩm phân trang</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="admin.php?page=createProduct">
                 <i class="fas fa-plus"></i>
                     <span>Thêm sản phẩm</span></a>
@@ -150,6 +155,9 @@
                             include('manageUser.php');
                             break;
                         case 'manageListProduct':
+                            include('./../adminpage/adminpage.php');
+                            break;
+                        case 'manageProduct':
                             include('manageListProduct.php');
                             break;
                         case 'createProduct':

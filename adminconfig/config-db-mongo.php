@@ -1,12 +1,12 @@
 <?php
-require 'vendor/autoload.php';
+require_once './../../vendor/autoload.php';
 
 class MongoConnection {
     private $client;
     private $db;
 
     public function __construct() {
-        $uri = "mongodb+srv://hoanguyenlexuan:2bwnC0SF9C0Ut5Hm@cluster0.216ds.mongodb.net/?retryWrites=true&w=majority";
+        $uri = "mongodb://hoanguyenlexuan:2bwnC0SF9C0Ut5Hm@cluster0.216ds.mongodb.net";
 
         try {
             // Tạo kết nối
@@ -14,7 +14,10 @@ class MongoConnection {
 
             // Chọn cơ sở dữ liệu (thay "sportshop" bằng tên cơ sở dữ liệu của bạn)
             $this->db = $this->client->sportshop;
+            echo "kết nối thành công";
         } catch (Exception $e) {
+            echo "kết nối thất bại". $e->getMessage();
+
             die("Kết nối thất bại: " . $e->getMessage());
         }
     }

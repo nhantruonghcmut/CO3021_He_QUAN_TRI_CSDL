@@ -43,6 +43,7 @@
           $conn->begin_transaction();
           $query = "SELECT * FROM product
                         WHERE price > (SELECT AVG(price_sell) FROM orders);";
+           echo "Query  " . $query . " sản phẩm";
           $result = $conn->query($query);
           $conn->commit();
           if ($result->num_rows > 0) {

@@ -1,112 +1,183 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Admin BK Shop</title>
-</head>
-<body>
-    <?php
-        session_start();
-        if(!($_SESSION) || !($_SESSION['role'] == 1)){ 
-            echo 
-            '
-            <script>
-                window.location.href = "../../index.php";
-            </script>
-            ';
-            exit();
-        }
-    ?>
+<!-- https://www.fundaofwebit.com/post/how-to-make-search-box-and-filter-data-in-html-table-from-database-in-php-mysql -->
+<div class="container-fluid">
+	<div class="row mb-3">
+		<div class="col-xl-9 col-md-6">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="./../../images/hcmut.png" alt="logo" style="height: 40px; width: 40px;">
-            </a>
-            
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <span>Admin của BK Shop</span>
-                    </li>
-                </ul>
-                
-                <form method='GET' action="" class="d-flex m-2">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
-                    <button class="btn btn-outline-success" type="submitSearch">Search</button>
-                </form>
+			<h1 class="h3 mb-2 text-gray-800">Danh sách sản phẩm</h1>
+			<a href="admin.php?page=createProduct" class="btn btn-success btn-icon-split mb-2">
+				<span class="icon text-white-50">
+					<i class="fas fa-plus"></i>
+				</span>
+				<span class="text">Thêm sản phẩm</span>
+			</a>
+		</div>
+		<div class="col-xl-3 col-md-6">
+			<div class="card border-left-info shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+								Tổng số lượng sản phẩm trong kho
+							</div>
+							<?php
+							require_once('./../../adminconfig/config-database.php');
+							$conn = openCon();
+							try {
+								$conn->begin_transaction();
+								$sumQuery = "SELECT SUM(quantity) AS total_quantity FROM product;";
+								$sumResult = $conn->query($sumQuery);
+								$sum = 0;
+								if ($sumResult->num_rows > 0) {
+									$sumRow = $sumResult->fetch_assoc();
+									$sum = $sumRow['total_quantity'];
+								}
+								echo "<div class='h5 mb-0 font-weight-bold text-gray-800'>" . number_format($sum, 0, ',', '.') . "</div>";
+								$conn->commit();
+							} catch (Exception $exception) {
+								$conn->rollback();
+								echo "Transaction thất bại: " . $exception->getMessage() . "";
+							}
+							?>
+						</div>
+						<div class="col-auto">
+							<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card shadow mb-4">
+		<div class="card-body">
+			<form id="searchForm" name='search' action="" method="post">
+				<div class="row mb-3">
+					<div class="col-4">
+						Truy vấn đơn
+						<div class="input-group">
+							<input id="keyword" name="keyword" type="text" class="form-control" value="<?php if (isset($_POST['keyword'])) {
+								echo $_POST['keyword'];
+							} ?>" aria-label="Tìm theo tên, giá, số lượng, mô tả" aria-describedby="basic-addon2"
+								placeholder="Tìm theo tên, giá, số lượng, mô tả">
 
-                <div class="m-2">
-                    <a class="text-decoration-none" href="../logout.php"><span class="d-none d-sm-inline mx-1 text-primary">Đăng xuất</span></a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    
-    <div class='container mt-3'>
-        <h3 class='text-center'>Danh sách sản phẩm</h3>
-        
-        <a href='./addproduct.php'><button class='col-5 col-sm-2 btn btn-success'>+ Thêm sản phẩm mới</button></a>
-        
+						</div>
+					</div>
+					<div class="col-4">
+						Truy vấn với điều kiện tổng hợp
+						<div class="input-group">
+							<input id="priceCondition" name="priceCondition" type="text" class="form-control" value="<?php if (isset($_POST['priceCondition'])) {
+								echo $_POST['priceCondition'];
+							} ?>" aria-label="Giá lớn hơn xxxx đồng" aria-describedby="basic-addon2" placeholder="Giá lớn hơn xxxx đồng">
+						</div>
+					</div>
+					<div class="col-4 d-flex align-items-end">
+						<input type="submit" class="btn btn-primary" id="basic-addon2" value="Tìm">
+					</div>
+			</form>
+		</div>
+		<div class="table-responsive" id="productTableContainer">
+			<!-- Content Row -->
 
-        <table class='table table-hover container'>
-            <thead>
-                <tr>
-                    <th scope='col'>ID</th>
-                    <th scope='col'>Tên sản phẩm</th>
-                    <th scope='col'>Loại</th>
-                    <th scope='col'>Số lượng</th>
-                    <th scope='col'>Mô tả</th>
-                    <th scope='col'>Hình ảnh</th>
-                    <th scope='col'>Giá</th>
-                    <th scope='col'>Tác vụ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    require_once('../../admincp/config-database.php');
-                    $conn = openCon();
+			<?php
+			function formatCurrency($number)
+			{
+				return number_format($number, 0, ',', '.') . ' VNĐ';
+			}
 
-                    $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
-                    if($keyword != ''){
-                        $query = "SELECT * FROM product WHERE name LIKE '%$keyword%'";
-                        $result = $conn->query($query);
-                    }
-                    else{
-                        $query = "SELECT * FROM product";
-                        $result = $conn->query($query);
-                    }
-                
-                    
+			$conn->begin_transaction();
+			try {
+				$keyword = isset($_POST['keyword']) ? $_POST['keyword'] : '';
+				$priceCondition = isset($_POST['priceCondition']) ? $_POST['priceCondition'] : '';
+				if ($keyword != '' && $priceCondition != '') {
+					$query = "SELECT * FROM product WHERE CONCAT(name,description,quantity) LIKE '%$keyword%' AND price > '$priceCondition'";
+					echo "Query: " . $query . "</br>";
+					echo "Tìm thấy " . $result->num_rows . " sản phẩm";
+					$result = $conn->query($query);
+				} else if ($keyword != '') {
+					$query = "SELECT * FROM product WHERE CONCAT(name,description,quantity) LIKE '%$keyword%'";
+					$result = $conn->query($query);
+					echo "Query: " . $query . "</br>";
+					echo "Tìm thấy " . $result->num_rows . " sản phẩm";
 
-                    if($result->num_rows > 0){
-                        while($row = $result->fetch_assoc()){
-                            echo
-                            "
-                            <tr>
-                                <th scope='row'>". $row["id"] ."</th>
-                                <td>". $row["name"] ."</td>
-                                <td>". $row["type"] ."</td>
-                                <td>". $row["quantity"] ."</td>
-                                <td>". $row["description"] ."</td>
-                                <td>
-                                    <img src='". $row["image"] ."' alt='...' style='height:40px; width: 40px;'>
-                                </td>
-                                <td>". $row["price"] ." VNĐ</td>
-                                <td>
-                                    <a href='./updateproduct.php?id=". $row["id"] ."'><button class='btn btn-primary'>Sửa</button></a>
-                                    <a href='./deleteproduct.php?id=". $row["id"] ."'><button class='btn btn-danger'>Xóa</button></a>
-                                </td>
-                            </tr>
-                            ";
-                        }
-                    }
-                ?>
-            </tbody>
-        </table>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
-</html>
+				} else {
+					$query = "SELECT * FROM product";
+					$result = $conn->query($query);
+				}
+				if ($result->num_rows > 0) {
+					echo "<table class='table table-bordered' id='productTable' width='100%'>
+								<thead>
+										<tr>
+												<th scope='col'>ID</th>
+												<th scope='col'>Tên sản phẩm</th>
+												<th scope='col'>Loại</th>
+												<th scope='col'>Số lượng</th>
+												<th scope='col'>Mô tả</th>
+												<th scope='col'>Hình ảnh</th>
+												<th scope='col'>Giá</th>
+												<th scope='col'>Tác vụ</th>
+										</tr>
+								</thead>
+								<tbody>";
+					while ($row = $result->fetch_assoc()) {
+						echo
+							"
+					<tr>
+						<th scope='row'>" . $row["id"] . "</th>
+						<td>" . $row["name"] . "</td>
+						<td>" . $row["type"] . "</td>
+						<td>" . $row["quantity"] . "</td>
+						<td>" . $row["description"] . "</td>
+						<td>
+							<img src='" . $row["image"] . "' alt='...' style='height:40px; width: 40px;'>
+						</td>
+						<td>" . formatCurrency($row["price"]) . "</td>
+						<td>
+							<a href='./../adminpage/updateproduct.php?id=" . $row["id"] . "'><button class='btn btn-primary'>Sửa</button></a>
+							<a href='./../adminpage/deleteproduct.php?id=" . $row["id"] . "'><button class='btn btn-danger'>Xóa</button></a>
+						</td>
+					</tr>
+					";
+					}
+					echo "</tbody></table>";
+				} else {
+					echo "<p>Không tìm thấy sản phẩm nào.</p>";
+				}
+
+			} catch (Exception $exception) {
+				//Rollback giao dịch nếu có lỗi
+				$conn->rollback();
+				echo "Transaction thất bại: " . $exception->getMessage() . "";
+			}
+			CloseCon($conn)
+				?>
+		</div>
+	</div>
+</div>
+</div>
+<script>
+	document.querySelector('input[type="submit"]').addEventListener('click', e => {
+
+		e.preventDefault();
+
+		let fd = new FormData(document.forms.search);
+
+		fetch(location.href, { method: 'post', body: fd })
+			.then(r => r.text())
+			.then(html => {
+				// Tạo một DOM tạm để phân tích HTML trả về
+				const tempDiv = document.createElement('div');
+				tempDiv.innerHTML = html;
+
+				// Lấy phần <tbody> từ kết quả trả về
+				const newTbody = tempDiv.querySelector('table tbody');
+				const currentTbody = document.querySelector('#productTable tbody'); // Phần tbody hiện tại
+
+				if (newTbody && currentTbody) {
+					currentTbody.innerHTML = newTbody.innerHTML; // Chỉ thay thế nội dung bên trong <tbody>
+				} else {
+					console.error('Không tìm thấy <tbody> trong kết quả trả về hoặc trong bảng hiện tại.');
+				}
+			}).catch((error) => {
+				console.error('Lỗi xảy ra:', error);
+			});
+	});
+</script>

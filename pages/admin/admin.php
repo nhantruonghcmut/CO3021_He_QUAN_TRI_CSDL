@@ -88,7 +88,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="admin.php?page=manageProduct">
                 <i class="fas fa-skating"></i>
-                    <span>Quản lý sản phẩm phân trang</span></a>
+                    <span>Quản lý sản phẩm có giá lớn hơn giá bán trung bình trong đơn hàng</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=manageProductNoOrder">
+                <i class="fas fa-skating"></i>
+                    <span>Quản lý sản phẩm không có đơn hàng</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="admin.php?page=createProduct">
@@ -159,6 +164,9 @@
                             break;
                         case 'manageProduct':
                             include('manageListProduct.php');
+                            break;
+                        case 'manageProductNoOrder':
+                            include('./../adminpage/productJoin.php');
                             break;
                         case 'createProduct':
                             include('./../adminpage/addproduct.php');

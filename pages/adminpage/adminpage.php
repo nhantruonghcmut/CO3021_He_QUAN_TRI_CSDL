@@ -1,53 +1,107 @@
 <!-- https://www.fundaofwebit.com/post/how-to-make-search-box-and-filter-data-in-html-table-from-database-in-php-mysql -->
 <div class="container-fluid">
-	<h1 class="h3 mb-2 text-gray-800">Danh sách sản phẩm</h1>
-	<a href="admin.php?page=createProduct" class="btn btn-success btn-icon-split mb-2">
-		<span class="icon text-white-50">
-			<i class="fas fa-plus"></i>
-		</span>
-		<span class="text">Thêm sản phẩm</span>
-	</a>
+	<div class="row mb-3">
+		<div class="col-xl-9 col-md-6">
+
+			<h1 class="h3 mb-2 text-gray-800">Danh sách sản phẩm</h1>
+			<a href="admin.php?page=createProduct" class="btn btn-success btn-icon-split mb-2">
+				<span class="icon text-white-50">
+					<i class="fas fa-plus"></i>
+				</span>
+				<span class="text">Thêm sản phẩm</span>
+			</a>
+		</div>
+		<div class="col-xl-3 col-md-6">
+			<div class="card border-left-info shadow h-100 py-2">
+				<div class="card-body">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+								Tổng số lượng sản phẩm trong kho
+							</div>
+							<?php
+							require_once('./../../adminconfig/config-database.php');
+							$conn = openCon();
+							try {
+								$conn->begin_transaction();
+								$sumQuery = "SELECT SUM(quantity) AS total_quantity FROM product;";
+								$sumResult = $conn->query($sumQuery);
+								$sum = 0;
+								if ($sumResult->num_rows > 0) {
+									$sumRow = $sumResult->fetch_assoc();
+									$sum = $sumRow['total_quantity'];
+								}
+								echo "<div class='h5 mb-0 font-weight-bold text-gray-800'>" . number_format($sum, 0, ',', '.') . "</div>";
+								$conn->commit();
+							} catch (Exception $exception) {
+								$conn->rollback();
+								echo "Transaction thất bại: " . $exception->getMessage() . "";
+							}
+							?>
+						</div>
+						<div class="col-auto">
+							<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="card shadow mb-4">
 		<div class="card-body">
-			<div class="row">
-				<div class="col-4">
-					Truy vấn đơn
-					<form id="searchForm" name='search' action="" method="post">
-						<div class="input-group mb-3">
+			<form id="searchForm" name='search' action="" method="post">
+				<div class="row mb-3">
+					<div class="col-4">
+						Truy vấn đơn
+						<div class="input-group">
 							<input id="keyword" name="keyword" type="text" class="form-control" value="<?php if (isset($_POST['keyword'])) {
 								echo $_POST['keyword'];
 							} ?>" aria-label="Tìm theo tên, giá, số lượng, mô tả" aria-describedby="basic-addon2"
 								placeholder="Tìm theo tên, giá, số lượng, mô tả">
-							<div class="input-group-append">
-								<input type="submit" class="input-group-text" id="basic-addon2" value="Tìm">
-							</div>
+
 						</div>
-					</form>
-				</div>
-				<div class="col-4">
-					Truy vấn với điều kiện tổng hợp
-				</div>
-			</div>
-			<div class="table-responsive" id="productTableContainer">
-				<!-- Content Row -->
+					</div>
+					<div class="col-4">
+						Truy vấn với điều kiện tổng hợp
+						<div class="input-group">
+							<input id="priceCondition" name="priceCondition" type="text" class="form-control" value="<?php if (isset($_POST['priceCondition'])) {
+								echo $_POST['priceCondition'];
+							} ?>" aria-label="Giá lớn hơn xxxx đồng" aria-describedby="basic-addon2" placeholder="Giá lớn hơn xxxx đồng">
+						</div>
+					</div>
+					<div class="col-4 d-flex align-items-end">
+						<input type="submit" class="btn btn-primary" id="basic-addon2" value="Tìm">
+					</div>
+			</form>
+		</div>
+		<div class="table-responsive" id="productTableContainer">
+			<!-- Content Row -->
 
-				<?php
-				require_once('./../../adminconfig/config-database.php');
-				$conn = openCon();
+			<?php
+			function formatCurrency($number)
+			{
+				return number_format($number, 0, ',', '.') . ' VNĐ';
+			}
 
-				// Bắt đầu transaction
-				$conn->begin_transaction();
-				try {
-					$keyword = isset($_POST['keyword']) ? $_POST['keyword'] : '';
-					if ($keyword != '') {
-						$query = "SELECT * FROM product WHERE CONCAT(name,price,description, quantity) LIKE '%$keyword%'";
-						$result = $conn->query($query);
-					} else {
-						$query = "SELECT * FROM product";
-						$result = $conn->query($query);
-					}
-					if ($result->num_rows > 0) {
-						echo "<table class='table table-bordered' id='productTable' width='100%'>
+			// Bắt đầu transaction
+			$conn->begin_transaction();
+			try {
+				$keyword = isset($_POST['keyword']) ? $_POST['keyword'] : '';
+				$priceCondition = isset($_POST['priceCondition']) ? $_POST['priceCondition'] : '';
+				if ($keyword != '' && $priceCondition != '') {
+					$query = "SELECT * FROM product WHERE CONCAT(name,description,quantity) LIKE '%$keyword%' AND price > '$priceCondition'";
+					echo "Query: " . $query . "</br>";
+					$result = $conn->query($query);
+				} else if ($keyword != '') {
+					$query = "SELECT * FROM product WHERE CONCAT(name,description,quantity) LIKE '%$keyword%'";
+					$result = $conn->query($query);
+				} else {
+					$query = "SELECT * FROM product";
+					$result = $conn->query($query);
+				}
+				if ($result->num_rows > 0) {
+					// echo "Tìm thấy " . $result->num_rows . " sản phẩm";
+					echo "<table class='table table-bordered' id='productTable' width='100%'>
 								<thead>
 										<tr>
 												<th scope='col'>ID</th>
@@ -61,9 +115,9 @@
 										</tr>
 								</thead>
 								<tbody>";
-						while ($row = $result->fetch_assoc()) {
-							echo
-								"
+					while ($row = $result->fetch_assoc()) {
+						echo
+							"
 					<tr>
 						<th scope='row'>" . $row["id"] . "</th>
 						<td>" . $row["name"] . "</td>
@@ -73,29 +127,29 @@
 						<td>
 							<img src='" . $row["image"] . "' alt='...' style='height:40px; width: 40px;'>
 						</td>
-						<td>" . $row["price"] . " VNĐ</td>
+						<td>" . formatCurrency($row["price"]) . "</td>
 						<td>
 							<a href='./../adminpage/updateproduct.php?id=" . $row["id"] . "'><button class='btn btn-primary'>Sửa</button></a>
 							<a href='./../adminpage/deleteproduct.php?id=" . $row["id"] . "'><button class='btn btn-danger'>Xóa</button></a>
 						</td>
 					</tr>
 					";
-						}
-						echo "</tbody></table>";
-					} else {
-						echo "<p>Không tìm thấy sản phẩm nào.</p>";
 					}
-
-				} catch (Exception $exception) {
-					//Rollback giao dịch nếu có lỗi
-					$conn->rollback();
-					echo "Transaction thất bại: " . $exception->getMessage() . "";
+					echo "</tbody></table>";
+				} else {
+					echo "<p>Không tìm thấy sản phẩm nào.</p>";
 				}
-				CloseCon($conn)
-					?>
-			</div>
+
+			} catch (Exception $exception) {
+				//Rollback giao dịch nếu có lỗi
+				$conn->rollback();
+				echo "Transaction thất bại: " . $exception->getMessage() . "";
+			}
+			CloseCon($conn)
+				?>
 		</div>
 	</div>
+</div>
 </div>
 <script>
 	document.querySelector('input[type="submit"]').addEventListener('click', e => {

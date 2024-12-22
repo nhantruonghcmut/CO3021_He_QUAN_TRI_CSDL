@@ -58,109 +58,148 @@ if ($start_date && $end_date && $filter_type) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <title>Quản lý người dùng</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <style>
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 250px;
-            background-color: #343a40;
-            color: white;
-            padding-top: 20px;
-        }
-        .sidebar a {
-            color: white;
-            padding: 10px 15px;
-            display: block;
-            text-decoration: none;
-        }
-        .sidebar a:hover {
-            background-color: #575d63;
-        }
-        .content {
-            margin-left: 260px;
-            padding: 20px;
-        }
-    </style>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
-<body>
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <h3 class="text-center text-white">Quản lý người dùng</h3>
-</div>
+<body id="page-top">
+    <div id="wrapper">
 
-<!-- Content -->
-<div class="content">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Admin Dashboard</a>
-    </nav>
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Quản lý Người Dùng</h1>
-
-        <!-- Form lọc -->
-        <form method="GET" action="" class="mb-4">
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="start_date" class="form-label">Ngày bắt đầu:</label>
-                    <input type="date" id="start_date" name="start_date" class="form-control">
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin.php?page=dashboard">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="col-md-4">
-                    <label for="end_date" class="form-label">Ngày kết thúc:</label>
-                    <input type="date" id="end_date" name="end_date" class="form-control">
-                </div>
-                <div class="col-md-4">
-                    <label for="filter_type" class="form-label">Lọc:</label>
-                    <select id="filter_type" name="filter_type" class="form-select">
-                        <option value="">--Chọn--</option>
-                        <option value="max">Nhiều nhất</option>
-                        <option value="min">Ít nhất</option>
-                    </select>
-                </div>
+                <div class="sidebar-brand-text mx-3">BK SHOP ADMIN</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="admin.php?page=dashboard">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Quản lý
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Lọc</button>
-        </form>
 
-        <hr>
+            <!-- Nav Item - Quản lý người dùng -->
+            <li class="nav-item">
+                <a class="nav-link" href="manageUser.php">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Quản lý người dùng</span></a>
+            </li>
 
-        <!-- Hiển thị kết quả lọc -->
-        <?php if ($filtered_users_query): ?>
-            <h2>Kết quả lọc</h2>
-            <?php if ($filtered_users_result->num_rows > 0) { ?>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Tổng số Orders</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = $filtered_users_result->fetch_assoc()) { ?>
-                        <tr>
-                            <td><?php echo $row['id']; ?></td>
-                            <td><?php echo $row['username']; ?></td>
-                            <td><?php echo $row['total_orders']; ?></td>
-                        </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            <?php } else { ?>
-                <p>Không tìm thấy người dùng nào theo bộ lọc.</p>
-            <?php } ?>
-        <?php endif; ?>
+            <!-- Nav Item - Quản lý sản phẩm -->
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=manageListProduct">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Quản lý sản phẩm</span></a>
+            </li>
 
-        <hr>
+            <!-- Nav Item - Quản lý giao dịch -->
+            <li class="nav-item">
+                <a class="nav-link" href="admin.php?page=manageTransaction">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Quản lý giao dịch</span>
+                </a>
+            </li>
 
-        <!-- Hiển thị toàn bộ user -->
+        </ul>
+        <!-- End of Sidebar -->
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </nav>
+
+                <div class="container-fluid">
+                    <h1 class="h3 mb-4 text-gray-800">Quản lý Người Dùng</h1>
+
+                    <form method="GET" action="">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="start_date">Ngày bắt đầu:</label>
+                                <input type="date" id="start_date" name="start_date" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="end_date">Ngày kết thúc:</label>
+                                <input type="date" id="end_date" name="end_date" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="filter_type">Lọc:</label>
+                                <select id="filter_type" name="filter_type" class="form-control">
+                                    <option value="">--Chọn--</option>
+                                    <option value="max">Nhiều nhất</option>
+                                    <option value="min">Ít nhất</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Lọc</button>
+                    </form>
+
+                    <?php if ($filtered_users_query): ?>
+                        <h2 class="mt-4">Kết quả lọc</h2>
+                        <?php if ($filtered_users_result->num_rows > 0): ?>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                        <th>Tổng số Orders</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($row = $filtered_users_result->fetch_assoc()): ?>
+                                        <tr>
+                                            <td><?= $row['id'] ?></td>
+                                            <td><?= $row['username'] ?></td>
+                                            <td><?= $row['total_orders'] ?></td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                </tbody>
+                            </table>
+                        <?php else: ?>
+                            <p>Không tìm thấy người dùng nào theo bộ lọc.</p>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+
+                    <!-- Hiển thị toàn bộ user -->
         <h2>Danh sách tất cả người dùng</h2>
         <table class="table table-striped">
             <thead>
@@ -234,8 +273,20 @@ $end_page = min($total_pages, $page + $range);
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Bản quyền &copy; Quản lý người dùng 2024</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
 
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
 </body>
 </html>
